@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int numDados;
+    int *dados;
+    int i;
+    int pontos = 0;
+
+    srand(time(NULL)); // inicializa o gerador de números aleatórios
+
+    printf("Bem-vindo ao Jogo de Dados RPG!\n");
+    printf("Quantos dados você deseja lançar? ");
+    scanf("%d", &numDados);
+
+    dados = (int*)malloc(numDados * sizeof(int)); // aloca memória para armazenar os resultados dos dados
+
+    printf("Os números dos dados lançados são:\n");
+
+    for (i = 0; i < numDados; i++) {
+        dados[i] = rand() % 6 + 1; // gera um número aleatório entre 1 e 6 para cada dado
+        printf("Dado %d: %d\n", i + 1, dados[i]);
+        pontos += dados[i]; // soma os pontos
+    }
+
+    printf("Pontos totais: %d\n", pontos);
+
+    free(dados); // libera a memória alocada para os dados
+
+    return 0;
+}
