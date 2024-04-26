@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <stdbool.h>
+
+// Definição da estrutura do personagem
+typedef struct {
+    char nome[50];
+    int vida;
+    int ataque;
+} Personagem;
+
+// Definição da estrutura da arma
+typedef struct {
+    char nome[50];
+    int poder;
+} Arma;
+
+// Definição da estrutura do poder
+typedef struct {
+    char nome[50];
+    int dano;
+} Poder;
+
+// Função para tomar decisões do jogador
+bool tomarDecisao() {
+    char resposta;
+    printf("Sim (s) ou Não (n)? ");
+    scanf(" %c", &resposta);
+    return (resposta == 's' || resposta == 'S');
+}
+
+int main() {
+    // Inicialização do gerador de números aleatórios
+    srand(time(NULL));
+
+    // Definição dos personagens
+    Personagem personagens[6] = {
+        {"Guerreiro", 100, 20},
+        {"Mago", 80, 30},
+        {"Arqueiro", 90, 25},
+        {"Ladino", 70, 35},
+        {"Paladino", 110, 15},
+        {"Bárbaro", 120, 10}
+    };
+
+    // Definição das armas
+    Arma armas[6] = {
+        {"Espada", 25},
+        {"Varinha Mágica", 30},
+        {"Arco e Flecha", 20},
+        {"Adaga", 35},
+        {"Martelo", 15},
+        {"Clava", 40}
+    };
+
+    // Definição dos poderes
+    Poder poderes[6] = {
+        {"Bola de Fogo", 50},
+        {"Raio Congelante", 45},
+        {"Flecha Flamejante", 40},
+        {"Furtividade", 55},
+        {"Escudo Divino", 60},
+        {"Fúria", 65}
+    };
+
+    // Introdução do jogo
+    printf("Bem-vindo ao Jogo de RPG!\n");
+    printf("Você está prestes a embarcar em uma emocionante aventura!\n");
+
+    // Exemplo de enredo do jogo
+    printf("Você se encontra em uma floresta escura e sinistra...\n");
+    printf("Um monstro gigante aparece diante de você!\n");
+
+    // Tomada de decisão do jogador
+    printf("Você deseja lutar contra o monstro?\n");
+    if (tomarDecisao()) {
+        // O jogador decide lutar
+        printf("Você puxa sua arma e se prepara para o combate!\n");
+        int danoJogador = personagens[0].ataque + armas[0].poder;
+        int danoMonstro = rand() % 40 + 30; // Dano do monstro aleatório entre 30 e 69
+        printf("Você ataca o monstro causando %d de dano!\n", danoJogador);
+        printf("O monstro revida e causa %d de dano em você!\n", danoMonstro);
+        personagens[0].vida -= danoMonstro;
+        printf("Sua vida restante: %d\n", personagens[0].vida);
+    } else {
+        // O jogador decide fugir
+        printf("Você decide fugir do monstro!\n");
+        printf("Você consegue escapar ileso...\n");
+    }
+
+    // Conclusão do jogo
+    printf("Fim do Jogo!\n");
+
+    return 0;
+}
