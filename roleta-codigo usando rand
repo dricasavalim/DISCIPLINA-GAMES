@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int numeroAposta;
+    int numeroSorteado;
+    int saldo = 100; // saldo inicial do jogador
+    int aposta;
+
+    srand(time(NULL)); // inicializa o gerador de números aleatórios
+
+    printf("Bem-vindo ao Mini Jogo da Roleta!\n");
+    printf("Seu saldo atual é: %d\n", saldo);
+
+    while (saldo > 0) {
+        printf("\nDigite o número em que deseja apostar (0 a 36): ");
+        scanf("%d", &numeroAposta);
+
+        if (numeroAposta < 0 || numeroAposta > 36) {
+            printf("Número inválido! Tente novamente.\n");
+            continue;
+        }
+
+        printf("Digite o valor da sua aposta: ");
+        scanf("%d", &aposta);
+
+        if (aposta > saldo) {
+            printf("Saldo insuficiente! Tente novamente.\n");
+            continue;
+        }
+
+        numeroSorteado = rand() % 37; // sorteia um número entre 0 e 36
+
+        printf("Número sorteado: %d\n", numeroSorteado);
+
+        if (numeroAposta == numeroSorteado) {
+            printf("Parabéns! Você acertou o número e ganhou %d!\n", aposta * 35);
+            saldo += aposta * 35; // ganho 35 vezes o valor apostado
+        } else {
+            printf("Que pena! Você errou o número.\n");
+            saldo -= aposta; // perde o valor da aposta
+        }
+
+        printf("Seu saldo atual é: %d\n", saldo);
+    }
+
+    printf("Você ficou sem saldo! Fim de jogo.\n");
+
+    return 0;
+}
