@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int dado1, dado2;
+    int pontos;
+
+    srand(time(NULL)); // inicializa o gerador de números aleatórios
+
+    printf("Bem-vindo ao Jogo de Dados RPG!\n");
+
+    dado1 = rand() % 6 + 1; // gera um número aleatório entre 1 e 6 para o dado1
+    dado2 = rand() % 6 + 1; // gera um número aleatório entre 1 e 6 para o dado2
+
+    printf("O dado 1 mostra: %d\n", dado1);
+    printf("O dado 2 mostra: %d\n", dado2);
+
+    pontos = dado1 + dado2;
+
+    printf("Pontos totais: %d\n", pontos);
+
+    return 0;
+}
