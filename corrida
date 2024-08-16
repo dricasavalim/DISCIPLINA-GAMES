@@ -1,0 +1,122 @@
+#include <stdio.h>
+
+#define LINHAS 5
+#define COLUNAS 5
+
+// Função para inicializar o campo com os números
+void inicializarCampo(int campo[LINHAS][COLUNAS]) {
+    // Inicializa a matriz com zeros
+    for (int i = 0; i < LINHAS; i++) {
+        for (int j = 0; j < COLUNAS; j++) {
+            campo[i][j] = 0;
+        }
+    }
+
+    // Define a posição inicial dos números
+    campo[0][0] = 1;
+    campo[0][1] = 2;
+}
+
+// Função para exibir o campo
+void exibirCampo(int campo[LINHAS][COLUNAS]) {
+    printf("Campo:\n");
+    for (int i = 0; i < LINHAS; i++) {
+        for (int j = 0; j < COLUNAS; j++) {
+            printf("%d ", campo[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// Função para mover um número
+void moverNumero(int campo[LINHAS][COLUNAS], int numero, int novaLinha, int novaColuna) {
+    // Encontra a posição atual do número
+    int linhaAtual, colunaAtual;
+    for (int i = 0; i < LINHAS; i++) {
+        for (int j = 0; j < COLUNAS; j++) {
+            if (campo[i][j] == numero) {
+                linhaAtual = i;
+                colunaAtual = j;
+                campo[i][j] = 0; // Remove o número da posição atual
+                break;
+            }
+        }
+    }
+
+    // Move o número para a nova posição
+    if (novaLinha >= 0 && novaLinha < LINHAS && novaColuna >= 0 && novaColuna < COLUNAS) {
+        campo[novaLinha][novaColuna] = numero;
+    }
+}
+
+// Função principal
+int main() {
+    int campo[LINHAS][COLUNAS];
+    inicializarCampo(campo);
+
+    int linha, coluna;
+    char comando;
+
+    while (1) {
+        exibirCampo(campo);
+
+        printf("Digite o número para mover (1 ou 2) e o comando (w, a, s, d): ");
+        scanf(" %d %c", &linha, &comando);
+
+        // Verifica se o número é 1 ou 2
+        if (linha != 1 && linha != 2) {
+            printf("Número inválido. Tente novamente.\n");
+            continue;
+        }
+
+        // Encontra a posição atual do número
+        int linhaAtual, colunaAtual;
+        for (int i = 0; i < LINHAS; i++) {
+            for (int j = 0; j < COLUNAS; j++) {
+                if (campo[i][j] == linha) {
+                    linhaAtual = i;
+                    colunaAtual = j;
+                    break;
+                }
+            }
+        }
+
+        // Atualiza a posição com base no comando
+        switch (comando) {
+            case 'w': // Move para cima
+                moverNumero(campo, linha, linhaAtual - 1, colunaAtual);
+                break;
+            case 's': // Move para baixo
+                moverNumero(campo, linha, linhaAtual + 1, colunaAtual);
+                break;
+            case 'a': // Move para a esquerda
+                moverNumero(campo, linha, linhaAtual, colunaAtual - 1);
+                break;
+            case 'd': // Move para a direita
+                moverNumero(campo, linha, linhaAtual, colunaAtual + 1);
+                break;
+            default:
+                printf("Comando inválido. Use 'w', 'a', 's' ou 'd'.\n");
+                break;
+        }
+
+        // Verifica se os números chegaram à linha final
+        int vitoria = 1;
+        for (int j = 0; j < COLUNAS; j++) {
+            if (campo[LINHAS - 1][j] == 1 || campo[LINHAS - 1][j] == 2) {
+                continue;
+            } else {
+                vitoria = 0;
+                break;
+            }
+        }
+
+        if (vitoria) {
+            exibirCampo(campo);
+            printf("Parabéns! Os números chegaram à linha final.\n");
+            break;
+        }
+    }
+
+    return 0;
+}
